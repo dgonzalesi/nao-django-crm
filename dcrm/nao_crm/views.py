@@ -4,6 +4,10 @@ from django.contrib import messages
 # Create your views here.
 
 def index(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST["password"]
+        print(username)
     return render(request, 'index.html', {})
 
 def login_user(request):

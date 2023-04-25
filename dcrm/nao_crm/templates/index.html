@@ -9,9 +9,8 @@
         <h1 id="testing"> Login </h1>
         <form method="POST" action="{% url 'index' %}">
             {% csrf_token %}
-
             <div class="mb-3">
-                <input type="text" class="form-control" name="first_name" placeholder="Nombre" require >
+                <input type="text" class="form-control" name="username" placeholder="Nombre de Usuario" require >
             </div>
             <div class="mb-3">
                 <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Contraseña" require >
