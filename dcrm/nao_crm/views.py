@@ -5,9 +5,10 @@ from django.contrib import messages
 
 def index(request):
     if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST["password"]
-        print(username)
+        username = request.POST['username']
+        password = request.POST.get("password")
+        print(request.POST['username'])
+        print(request.POST)
     return render(request, 'index.html', {})
 
 def login_user(request):
