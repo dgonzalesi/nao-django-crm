@@ -10,6 +10,16 @@
     {% include 'navbar.html' %}
     <div class="container">
         <br />
+        {% if 1 == 1 %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <buttom type='button' class="btn-close"
+                      data-bs-dismiss="alert" aria-label="Close">
+                    </buttom>
+                </div>
+            {% endfor %}
+        {% endif %}
         {% block content %}
         {% endblock %}
     </div>
