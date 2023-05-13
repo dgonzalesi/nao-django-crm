@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from .forms import SignUpForm
 # Create your views here.
 
 def index(request):
@@ -30,12 +31,14 @@ def register_user(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data['username']
-            password = form.clean_data['password1']
+            password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request, ("La cuenta fue creada con el nombre de usuario: " + username))
             return redirect('index')
     else:
         form = SignUpForm()
-        return render(request, 'register.html', {})
+        return render(request, 'register.html', {'form': form})
+
+    return render(request, 'register.html', {'form': form})
 
