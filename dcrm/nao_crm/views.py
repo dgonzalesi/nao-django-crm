@@ -25,5 +25,17 @@ def logout_user(request):
     return redirect('index')
 
 def register_user(request):
-    return render(request, 'register.html', {})
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.clean_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, ("La cuenta fue creada con el nombre de usuario: " + username))
+            return redirect('index')
+    else:
+        form = SignUpForm()
+        return render(request, 'register.html', {})
 
