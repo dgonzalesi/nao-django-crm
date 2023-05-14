@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm
+from .models import Record
 # Create your views here.
 
 def index(request):
+    records = Record.objects.all()
+
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -18,7 +21,8 @@ def index(request):
             print(messages)
             return redirect('index')
     else:
-        return render(request, 'index.html', {})
+        print(records[0])
+        return render(request, 'index.html', { 'records': records })
 
 def logout_user(request):
     logout(request)
@@ -42,3 +46,13 @@ def register_user(request):
 
     return render(request, 'register.html', {'form': form})
 
+
+def customer_record(request, pk):
+    print(pk)
+    if request.user.is_authenticated:
+        # Look up record
+        customer_record = Record.objects.get(id=pk)
+        return render(request, 'record.html', {'customer_record': customer_record})
+    else:
+        messages.success(request, ("Debes estar autenticado para ver esta pagina"))
+        return redirect('index')
