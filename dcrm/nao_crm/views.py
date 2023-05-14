@@ -1,3 +1,5 @@
+from mailbox import Message
+from urllib import request
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -56,3 +58,18 @@ def customer_record(request, pk):
     else:
         messages.success(request, ("Debes estar autenticado para ver esta pagina"))
         return redirect('index')
+
+def delete_record(request, pk):
+    if request.user.is_authenticated:
+        delete_it = Record.objects.get(id=pk)
+        delete_it.delete()
+        messages.success(request, "El contacto ha sido borrado")
+        return redirect('index')
+    else:
+        menssage = "Necesitas estar autentificado para llevar a cabo esa acción"
+        messages.success(request, menssage)
+        return render(request, 'register.html', {})
+    
+def add_record(reques):
+    if request.user.is_authenticated:
+        return render(request, 'add_record.html', {})

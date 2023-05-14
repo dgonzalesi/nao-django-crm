@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="card">
+        {% if customer_record %}
+            <div class="card-header">
+                Perfil de {{ customer_record.first_name }}:
+            </div>
+            <div class="card-body">
+            <h5 class="card-title"> Nombre: {{ customer_record.first_name }}</h5>
+            <h5 class="card-title"> Apellidos: {{ customer_record.last_name }}</h5>
+            <h5 class="card-title"> Telefono: <a href="tel:{{ customer_record.phone }}">{{ customer_record.phone }}</a></h5>
+            <h5 class="card-title"> Direccion: {{ customer_record.adress }}</h5>
+            <h5 class="card-title">Ciudad: {{ customer_record.city }}</h5>
+            <h5 class="card-title">Estado: {{ customer_record.state }}</h5>
+            <h5 class="card-title">Codig Postal: {{ customer_record.zipcode }}</h5>
+            <div calss="container">
+                <a href="{% url 'index' %}" class="btn btn-primary">Regresar</a>
+                <a href="{% url 'delete_record' customer_record.id  %}" class="btn btn-danger"> Borrar</a>
+            </div>
+            </div>
+        {% else %}
+            <h1> No tienes contactos </h1>
+        {% endif %}
+      </div>
+{% endblock %}
