@@ -1,9 +1,10 @@
+from email import message
 from mailbox import Message
 from urllib import request
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm
+from .forms import SignUpForm, AddRecordForm
 from .models import Record
 # Create your views here.
 
@@ -50,7 +51,6 @@ def register_user(request):
 
 
 def customer_record(request, pk):
-    print(pk)
     if request.user.is_authenticated:
         # Look up record
         customer_record = Record.objects.get(id=pk)
@@ -70,6 +70,15 @@ def delete_record(request, pk):
         messages.success(request, menssage)
         return render(request, 'register.html', {})
     
-def add_record(reques):
+def add_record(request):
+    form = AddRecordForm(request.POST or None)
     if request.user.is_authenticated:
-        return render(request, 'add_record.html', {})
+        if request.method == "POST":
+            if form.is_valid():
+                add_record = form.save()
+                messages.success(request, "Record Added...")
+                return redirect('index')
+        return render(request, 'add_record.html', {'form':form})
+    else:
+        messages.success(request, "Necesitas una cuenta para registrar contactos.")
+        return redirect('index')
