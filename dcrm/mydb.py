@@ -1,12 +1,13 @@
 # IMPORT THE CONECTOR TO DB IN POSTGRESQL AND THE LIBRARY TO WORK WITH DATETIME
 
+import os
 import psycopg2
 
 database = psycopg2.connect(
-    host = "localhost",
-    user = "postgres",
-    dbaname = "django_nao_crm",
-    password = "12345678"
+    host = os.environ['DB_HOSTS'],
+    user = os.environ['DB_USERNAME'],
+    dbaname = os.environ['DB_NAME'],
+    password = os.environ['DB_PASSWORD']
 )
 
 # Open a curso to perform database operations

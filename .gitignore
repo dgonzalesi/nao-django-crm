@@ -1,0 +1,12 @@
+# Virtual environment
+venv/
+.env/
+
+# Dependencies installed by pip
+lib/
+bin/
+include/
+lib64/
+Scripts/
+*.egg-info/
+*.pyc
